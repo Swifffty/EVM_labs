@@ -1,4 +1,5 @@
 #include <iostream>
+#include <iomanip>
 #include <opencv4/opencv2/opencv.hpp>
 #include <opencv4/opencv2/videoio.hpp>
 #include <opencv4/opencv2/highgui.hpp>
@@ -49,11 +50,6 @@ int main() {
         double t_convert = cv::getTickCount();
         cv::imshow("Camera", image);
         double t_out = cv::getTickCount();
-        double t_end = cv::getTickCount();
-        int time_read = ((t_read - t_start) / freq) * 1000;
-        int time_convert = ((t_convert - t_read) / freq) * 1000;
-        int time_out = ((t_out - t_convert) / freq) * 1000;
-        std::cout << "read " << time_read << " convert " << time_convert << " out " << time_out << std::endl;
         char c = (char) cv::waitKey(33);
 
         if (c == 27) {
@@ -82,6 +78,12 @@ int main() {
 
         double t_end_frame = cv::getTickCount();
         fps = 1000.0 / (((t_end_frame - t_start) / freq) * 1000);
+
+        double time_frame = cv::getTickCount() - t_start;
+        double time_read = 100 * (t_read - t_start) / time_frame;
+        double time_convert = 100 * (t_convert - t_read) / time_frame;
+        double time_out = 100 * (t_out - t_convert) / time_frame;
+        std::cout << "read " << std::fixed << std::setprecision(2) << time_read << " convert " << std::fixed << std::setprecision(2) << time_convert << " out "<< std::fixed << std::setprecision(2) << time_out << std::endl;
     }
     cv::destroyAllWindows();
     return 0;

@@ -1,0 +1,10 @@
+non_vector:
+29 seconds -O1
+13 seconds -O3
+
+vector_gcc:
+12 seconds -O3
+
+with_blas:
+
+2 seconds
